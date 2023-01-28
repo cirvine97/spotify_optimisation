@@ -3,3 +3,5 @@ __pycache__/
 *.DS_Store
 *.cache
 cred.py
+scratch.ipynb
+Data/
