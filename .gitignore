@@ -4,3 +4,4 @@ __pycache__/
 cred.py
 scratch.ipynb
 Data/
+*.csv
