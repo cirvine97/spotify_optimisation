@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -15,19 +16,34 @@ class Playlist:
     """
     def __init__(
             self, 
-            playlist_id
+            playlist_url
         ):
-        self.playlist_id = playlist_id
-        self.playlist = sp.playlist_tracks(playlist_id)
+        self.playlist_id = self.get_playlist_id(playlist_url)
+        self.playlist = sp.playlist_tracks(self.playlist_id)
         self.playlist_metadata_df = self.get_playlist_data()
-    
+
+
+    def get_playlist_id(
+            self,
+            playlist_url
+        ):
+        pattern = r'playlist/([a-zA-Z0-9]+)'
+        match = re.search(pattern, playlist_url)
+        if match:
+            playlist_id = match.group(1)
+            return playlist_id
+        else:
+            raise ValueError("Playlist ID not found in the URL.")
+
+
     def get_audio_features(
             self, 
             track_id
         ):
         audio_features = sp.audio_features(track_id)
         return audio_features[0] if audio_features else {}
-    
+
+
     def get_artist_genres(
             self, 
             artist_id
