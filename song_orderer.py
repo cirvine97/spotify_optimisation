@@ -61,15 +61,16 @@ class Playlist:
             track_id = track['id']
             audio_features = self.get_audio_features(track_id)
 
-            # Get genre info of artists
-            artist_ids = []
-            for artist in track['artists']:
-                artist_ids.append(artist['id'])
-            genres = []
-            for artist_id in artist_ids:
-                genres += self.get_artist_genres(artist_id)
-            # Remove duplicates
-            genres = set(genres)
+            # TODO: Add this back in when figured out an embedding method for genres
+            # # Get genre info of artists
+            # artist_ids = []
+            # for artist in track['artists']:
+            #     artist_ids.append(artist['id'])
+            # genres = []
+            # for artist_id in artist_ids:
+            #     genres += self.get_artist_genres(artist_id)
+            # # Remove duplicates
+            # genres = set(genres)
 
             track_info = {
                 'Track Name': track['name'],
@@ -90,8 +91,8 @@ class Playlist:
                 'Key': audio_features.get('key', None),
                 'Mode': audio_features.get('mode', None),
                 'Time Signature': audio_features.get('time_signature', None),
-                'Genres': genres,
-                'Top Genre': list(genres)[0] if genres else None
+                # 'Genres': genres,
+                # 'Top Genre': list(genres)[0] if genres else None
             }
 
             track_data.append(track_info)
