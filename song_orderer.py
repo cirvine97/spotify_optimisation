@@ -43,13 +43,6 @@ class Playlist:
         audio_features = sp.audio_features(track_id)
         return audio_features[0] if audio_features else {}
 
-
-    def get_artist_genres(
-            self, 
-            artist_id
-        ):
-        artist_data = sp.artist(artist_id)
-        return artist_data['genres']
     
     def get_playlist_data(
             self
@@ -60,17 +53,6 @@ class Playlist:
             track = item['track']
             track_id = track['id']
             audio_features = self.get_audio_features(track_id)
-
-            # TODO: Add this back in when figured out an embedding method for genres
-            # # Get genre info of artists
-            # artist_ids = []
-            # for artist in track['artists']:
-            #     artist_ids.append(artist['id'])
-            # genres = []
-            # for artist_id in artist_ids:
-            #     genres += self.get_artist_genres(artist_id)
-            # # Remove duplicates
-            # genres = set(genres)
 
             track_info = {
                 'Track Name': track['name'],
@@ -90,9 +72,7 @@ class Playlist:
                 'Tempo': audio_features.get('tempo', None),
                 'Key': audio_features.get('key', None),
                 'Mode': audio_features.get('mode', None),
-                'Time Signature': audio_features.get('time_signature', None),
-                # 'Genres': genres,
-                # 'Top Genre': list(genres)[0] if genres else None
+                'Time Signature': audio_features.get('time_signature', None)
             }
 
             track_data.append(track_info)
