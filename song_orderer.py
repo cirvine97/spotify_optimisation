@@ -9,7 +9,7 @@ import cred
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_ID,
                                                client_secret=cred.client_SECRET,
                                                redirect_uri=cred.redirect_url,
-                                               scope='playlist-read-private'))
+                                               scope='playlist-modify-public'))
 
 class Playlist:
     """Retrieves and stores metadata of a Spotify playlist.
@@ -70,6 +70,7 @@ class Playlist:
                 audio_features = audio_features_batch[i]
 
                 track_info = {
+                    'Track ID': track_id,
                     'Track Name': track['name'],
                     'Artist Name': track['artists'][0]['name'],  # Assuming only one artist per track
                     'Album Name': track['album']['name'],
@@ -101,3 +102,6 @@ class Playlist:
 
         return playlist_df
         
+        
+    def update_playlist(self, track_ids):
+        sp.playlist_replace_items(self.playlist_id, items=track_ids)
